@@ -19,7 +19,7 @@ class Bonus(models.Model):
     max_step_rub = models.IntegerField(null=False)
     count_days_limit = models.IntegerField(null=False, default=30)
 
-class Bonuses_Customer(models.Model):
+class Bonuses_Customers(models.Model):
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE, null=False)
     bonus = models.ForeignKey(Bonus, on_delete=models.CASCADE, null=False)
     date_created = models.DateTimeField(auto_now_add=True, null=False)
