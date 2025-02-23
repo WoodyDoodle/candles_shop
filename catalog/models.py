@@ -31,7 +31,26 @@ class TypeProduct(models.Model):
 class Product(models.Model):
     name = models.CharField(max_length=200, null=False)
     type = models.ForeignKey(TypeProduct, on_delete=models.CASCADE, null=False)
-    price = models.FloatField(null=False)
+    price_sell = models.DecimalField(null=True, decimal_places=2, max_digits=10)
+    price_cost = models.DecimalField(null=True, decimal_places=2, max_digits=10)
     count_days_limit = models.IntegerField(null=False, default=30)
     bonus = models.ForeignKey(Bonus, on_delete=models.CASCADE, null=False)
+
+class Order(models.Model):
+    id_customer = models.ForeignKey(Customer, on_delete=models.CASCADE, null=False)
+    id_product = models.ForeignKey(Product, on_delete=models.CASCADE, null=False)
+    date_created = models.DateTimeField(auto_now_add=True, null=False)
+    date_send = models.DateTimeField(null=True)
+    is_active = models.BooleanField(default=True)
+    is_paid = models.BooleanField(default=False)
+    is_bonus = models.BooleanField(default=False)
+    bonus_percent = models.IntegerField(null=True)
+    bonus_value_rub = models.IntegerField(null=True)
+    source_created = models.Choices(choices=[(1, 'Telegram'), (2, 'Site'), (3, 'VK')], default=1, null=False)
+    description = models.TextField(null=True)
+
+class Order_Product(models.Model):
+    id_order = models.ForeignKey(Order, on_delete=models.CASCADE, null=False)
+    id_product = models.ForeignKey(Product, on_delete=models.CASCADE, null=False)
+    count = models.IntegerField(null=False)
     
