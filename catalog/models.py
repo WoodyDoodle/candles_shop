@@ -9,7 +9,6 @@ class Customer(models.Model):
     email = models.CharField(max_length=200, null=True)
     tg_id = models.CharField(max_length=200, null=True)
     tg_login = models.CharField(max_length=200, null=True)
-    tg_photo_id = models.IntegerField(null=True)
     date_created = models.DateTimeField(auto_now_add=True, null=False)
     source_created = models.Choices(choices=[(1, 'Telegram'), (2, 'Site'), (3, 'VK')], default=1, null=False)
 
@@ -28,15 +27,20 @@ class Bonuses_Customers(models.Model):
 class TypeProduct(models.Model):
     name = models.CharField(max_length=200, null=False)
 
+class Image(models.Model):
+    img = models.ImageField(upload_to='/images', null=False)
+
 class Product(models.Model):
     name = models.CharField(max_length=200, null=False)
+    images = models.ManyToManyField(Image, null=True)
     type = models.ForeignKey(TypeProduct, on_delete=models.CASCADE, null=False)
     price_sell = models.DecimalField(null=True, decimal_places=2, max_digits=10)
     price_cost = models.DecimalField(null=True, decimal_places=2, max_digits=10)
+    description = models.TextField(null=True)
 
 class Order(models.Model):
-    id_customer = models.ForeignKey(Customer, on_delete=models.CASCADE, null=False)
-    id_product = models.ForeignKey(Product, on_delete=models.CASCADE, null=False)
+    customer = models.ForeignKey(Customer, on_delete=models.CASCADE, null=False)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, null=False)
     date_created = models.DateTimeField(auto_now_add=True, null=False)
     date_send = models.DateTimeField(null=True)
     is_active = models.BooleanField(default=True)

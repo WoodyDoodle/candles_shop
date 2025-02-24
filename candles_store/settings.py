@@ -54,7 +54,7 @@ ROOT_URLCONF = 'candles_store.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': ['templates', 'static'], #['candles_store/templates/'],
+        'DIRS': ['templates', 'static', 'templates/html'], #['candles_store/templates/'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -66,11 +66,11 @@ TEMPLATES = [
         },
     },
 ]
-STATIC_URL = '/static/'
+STATIC_URL = 'static/'
 
 STATICFILES_DIRS = [ os.path.join(BASE_DIR,'static') ]
 
-STATIC_ROOT = os.path.join(BASE_DIR, 'assets')
+#STATIC_ROOT = os.path.join(BASE_DIR, 'assets')
 
 WSGI_APPLICATION = 'candles_store.wsgi.application'
 

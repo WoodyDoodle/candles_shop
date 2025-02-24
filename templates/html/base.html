@@ -1,10 +1,9 @@
-{% load static %}
 <!DOCTYPE html>
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
     <title>{% block title %}Магазин Философия{% endblock title %}</title>
-    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <link rel="stylesheet" href="../static/css/styles.css">
 </head>
 <body>
     <header>
@@ -22,7 +21,7 @@
         {% block content %}{% endblock content %}
     </main>
     <footer>
-        {% block footer}
+        {% block footer %}
         <p>© 2025 Философия</p>
         {% endblock footer %}
     </footer>
