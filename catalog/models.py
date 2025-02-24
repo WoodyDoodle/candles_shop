@@ -33,8 +33,6 @@ class Product(models.Model):
     type = models.ForeignKey(TypeProduct, on_delete=models.CASCADE, null=False)
     price_sell = models.DecimalField(null=True, decimal_places=2, max_digits=10)
     price_cost = models.DecimalField(null=True, decimal_places=2, max_digits=10)
-    count_days_limit = models.IntegerField(null=False, default=30)
-    bonus = models.ForeignKey(Bonus, on_delete=models.CASCADE, null=False)
 
 class Order(models.Model):
     id_customer = models.ForeignKey(Customer, on_delete=models.CASCADE, null=False)
