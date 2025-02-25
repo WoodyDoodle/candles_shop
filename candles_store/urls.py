@@ -16,7 +16,11 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from .settings import MEDIA_ROOT, MEDIA_URL
+from django.conf.urls.static import static
+
 from catalog import views
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -24,4 +28,4 @@ urlpatterns = [
     path('shop/', views.catalog, name='shop'),
     path('base/', views.base, name='base'),
     
-]
+] + static(MEDIA_URL, document_root=MEDIA_ROOT)

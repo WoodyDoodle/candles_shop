@@ -38,6 +38,11 @@ footer {
     background-color: #f8f8f8;
     padding: 20px;
     text-align: center;
+    position:fixed;
+    left:0px;
+    bottom:0px;
+    height:60px;
+    width:100%;
 }
 
 /* Карточка товара */
@@ -49,6 +54,7 @@ footer {
     margin: 10px;
     display: inline-block;
     vertical-align: top;
+    border-radius: 15px;
 }
 .product-card img {
     width: 100%;
@@ -67,15 +73,16 @@ footer {
 .product-card .price {
     font-size: 18px;
     font-weight: bold;
-    color: #f00;
+    /*color: #f00;*/
 }
 
 .product-card .buy-button {
     display: block;
     width: 90%;
     padding: 10px;
-    background-color: #f00;
+    background-color: rgb(255, 208, 0);
     color: #fff;
     text-align: center;
     text-decoration: none;
+    border-radius: 15px;
 }

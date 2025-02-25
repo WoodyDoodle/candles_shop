@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'catalog'
 ]
 
 MIDDLEWARE = [
@@ -71,6 +72,12 @@ STATIC_URL = 'static/'
 STATICFILES_DIRS = [ os.path.join(BASE_DIR,'static') ]
 
 #STATIC_ROOT = os.path.join(BASE_DIR, 'assets')
+
+MEDIA_URL = 'media/'
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+THUMBNAIL_MEDIA_URL = '/'
 
 WSGI_APPLICATION = 'candles_store.wsgi.application'
 
