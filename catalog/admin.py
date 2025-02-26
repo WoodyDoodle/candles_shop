@@ -34,7 +34,7 @@ class ProductAdmin(admin.ModelAdmin):
             content = ''
             for img in galery:
                 img: Image
-                content += img
+                content += img.img.url
             return mark_safe(content)
         else:
             return '-'

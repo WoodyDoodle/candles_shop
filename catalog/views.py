@@ -7,5 +7,8 @@ def index(request):
 def catalog(request):
     return render(request, 'html/shop.html')
 
-def base(request):
-    return render(request, 'html/base.html')
+def about(request):
+    return render(request, 'html/about.html')
+
+def contact(request):
+    return render(request, 'html/contact.html')
