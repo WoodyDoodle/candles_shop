@@ -22,23 +22,22 @@ class TypeProductAdmin(admin.ModelAdmin): pass
     
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
-    #list_display = ('id','name', 'images', 'type',
-    #              'price_sell','price_cost','description')
-    # list_filter = ('name','price_sell','price_cost','type','description')
+    list_display = ('name', 'id','type',
+                  'price_sell','price_cost','description')
+    list_filter = ('name','price_sell','price_cost','type','description')
     # search_fields = ('name','price_sell','price_cost','type','description')
     readonly_fields = ['preview']
-
+    
     def preview(self, obj: Product):
         galery = obj.images.all()
         if galery:
             content = ''
             for img in galery:
                 img: Image
-                content += img.img.url
+                content += img.preview()
             return mark_safe(content)
         else:
             return '-'
-        #return mark_safe(f'<img src="{obj.images.all()[0].img.url}" style="max-width: 200px;">')
     
 
 @admin.register(Order)

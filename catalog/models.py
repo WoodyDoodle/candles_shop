@@ -45,7 +45,7 @@ class Image(models.Model):
     img = models.ImageField(upload_to='images/', null=False)
 
     def preview(self):
-        return mark_safe(f'<img src="{self.img.url}" style="height: 100px;">')
+        return mark_safe(f'<img src="{self.img.url}" style="height: 100px;" class="product-image">')
 
     def __str__(self) -> str:
         return self.name
@@ -53,6 +53,7 @@ class Image(models.Model):
 class Product(models.Model):
     name = models.CharField(max_length=200, null=False)
     images = models.ManyToManyField(Image)
+    preview_image = models.ForeignKey(Image, on_delete=models.SET_NULL, null=True, related_name='preview_image')
     type = models.ForeignKey(TypeProduct, on_delete=models.CASCADE, null=False)
     price_sell = models.DecimalField(null=True, decimal_places=2, max_digits=10)
     price_cost = models.DecimalField(null=True, decimal_places=2, max_digits=10)

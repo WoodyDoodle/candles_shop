@@ -19,21 +19,21 @@ from django.urls import path
 from .settings import MEDIA_ROOT, MEDIA_URL
 from django.conf.urls.static import static
 
-from catalog import views
+from catalog import views as catalog_views
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', views.index, name='shop'),
-    path('shop/', views.catalog, name='shop'),
-    path('about/', views.about, name='about'),
-    path('contact/', views.contact, name='contact'),
-    path('product/<int:product_id>/', views.product, name='product'),
-    path('cart/', views.cart, name='cart'),
-    path('checkout/', views.checkout, name='checkout'),
-    path('add_to_cart/<int:product_id>/', views.add_to_cart, name='add_to_cart'),
-    path('remove_from_cart/<int:product_id>/', views.remove_from_cart, name='remove_from_cart'),
-    path('order_summary/', views.order_summary, name='order_summary'),
+    path('', catalog_views.index, name='index'),
+    path('shop/', catalog_views.catalog, name='shop'),
+    path('about/', catalog_views.about, name='about'),
+    path('contact/', catalog_views.contact, name='contact'),
+    ####### path('product/<int:product_id>/', catalog_views.product, name='product'),
+    # path('cart/', views.cart, name='cart'),
+    # path('checkout/', views.checkout, name='checkout'),
+    # path('add_to_cart/<int:product_id>/', views.add_to_cart, name='add_to_cart'),
+    # path('remove_from_cart/<int:product_id>/', views.remove_from_cart, name='remove_from_cart'),
+    # path('order_summary/', views.order_summary, name='order_summary'),
     
     
 ] + static(MEDIA_URL, document_root=MEDIA_ROOT)

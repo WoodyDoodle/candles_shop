@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -10,9 +11,13 @@
         {% block header %}
         <nav>
             <ul>
+                <a href="../shop">
+                    <img src="../static/images/logo.png" style="height: 50px;">
+                </a>
                 <li><a href="#about">О нас</a></li>
                 <li><a href="#catalog">Каталог</a></li>
                 <li><a href="#contacts">Контакты</a></li>
+                <li></li>
             </ul>
         </nav>
         {% endblock header %}
