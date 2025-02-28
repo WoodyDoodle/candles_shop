@@ -14,9 +14,9 @@
                 <a href="../shop">
                     <img src="../static/images/logo.png" style="height: 50px;">
                 </a>
-                <li><a href="#about">О нас</a></li>
-                <li><a href="#catalog">Каталог</a></li>
-                <li><a href="#contacts">Контакты</a></li>
+                <li{% if current_page == 'about' %} class="active"{% endif %}><a href="../about">О нас</a></li>
+                <li{% if current_page == 'shop' %} class="active"{% endif %}><a href="../shop">Каталог</a></li>
+                <li{% if current_page == 'contact' %} class="active"{% endif %}><a href="../contact">Контакты</a></li>
                 <li></li>
             </ul>
         </nav>
