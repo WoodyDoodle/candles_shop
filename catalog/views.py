@@ -24,3 +24,4 @@ def contact(request):
 
 def products(request):
     return render(request, 'html/products.html')
+

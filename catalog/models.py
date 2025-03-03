@@ -1,12 +1,12 @@
+from django.conf import settings
 from django.db import models
 from django.utils.safestring import mark_safe
 # Create your models here.
 
 class Customer(models.Model):
-    name = models.CharField(max_length=200, null=True)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True)
     address = models.CharField(max_length=200, null=True)
     phone = models.CharField(max_length=200, null=True)
-    email = models.CharField(max_length=200, null=True)
     tg_id = models.CharField(max_length=200, null=True)
     tg_login = models.CharField(max_length=200, null=True)
     date_created = models.DateTimeField(auto_now_add=True, null=False)
@@ -83,3 +83,11 @@ class Order_Product(models.Model):
     id_product = models.ForeignKey(Product, on_delete=models.CASCADE, null=False)
     count = models.IntegerField(null=False)
     
+class Cart(models.Model):
+    customer = models.ForeignKey(Customer, on_delete=models.CASCADE, null=False)
+    order = models.ForeignKey(Order, on_delete=models.CASCADE, null=True)
+    date_created = models.DateTimeField(auto_now_add=True, null=False)
+    last_add = models.DateTimeField(null=False)
+    is_paid = models.BooleanField(default=False)
+    products = models.ManyToManyField(Product, through='Cart_Products')
+
