@@ -5,10 +5,24 @@ from django.shortcuts import render
 from rest_framework import renderers
 
 from ..catalog.models import Cart, Product
+from .serializers import CartSerializer, ProductSerializer
 
 
 logger = logging.getLogger(__name__)
 # Create your views here.
+
+@csrf_exempt
+def cart(request:HttpRequest):
+    if request.method == 'GET':
+        cart = Cart.objects.get_or_create(customer=request.user)[0]
+        products = cart.products.all()
+        data = []
+        for product in products:
+            serializer = ProductSerializer(product)
+            data.append(serializer.data)
+            
+
+
 @csrf_exempt
 def add_to_cart(request:HttpRequest):
     if request.method == 'POST':
