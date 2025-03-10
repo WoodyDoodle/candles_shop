@@ -4,7 +4,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import render
 from rest_framework import renderers
 
-from ..catalog.models import Cart, Product
+from catalog.models import Cart, Product
 from .serializers import CartSerializer, ProductSerializer
 
 

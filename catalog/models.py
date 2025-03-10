@@ -89,5 +89,5 @@ class Cart(models.Model):
     date_created = models.DateTimeField(auto_now_add=True, null=False)
     last_add = models.DateTimeField(null=False)
     is_paid = models.BooleanField(default=False)
-    products = models.ManyToManyField(Product, through='Cart_Products')
+    products = models.ManyToManyField(Product)
 
