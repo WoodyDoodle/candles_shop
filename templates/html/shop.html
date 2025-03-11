@@ -1,5 +1,7 @@
 {% extends "base.html" %}
 {% block content %}
+{% load static %}
+{% csrf_token %}
 <section id="catalog">
     <h1>Каталог</h1>
     <div class="product-container">
@@ -9,10 +11,11 @@
                 <h2>{{ item.name }}</h2>
                 <p>{{ item.type }}</p>
                 <p class="price">{{ item.price_sell }} р.</p>
-                <a href="#" class="buy-button">Купить</a>
+                <a href="" class="buy-button" data-product-id='{{ item.id }}'>Купить</a>
             </div>
         </div>
         {% endfor %}
     </div>
 </section>
+<script src="{% static 'js/add_to_cart.js' %}"></script>
 {% endblock content %}
