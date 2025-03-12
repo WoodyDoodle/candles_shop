@@ -1,4 +1,5 @@
 import logging
+import json
 
 from django.contrib.auth.models import User
 from django.http import JsonResponse, HttpRequest
@@ -7,7 +8,7 @@ from django.views.decorators.http import require_GET, require_POST
 from django.shortcuts import render
 from rest_framework import renderers
 
-from catalog.models import Cart, Product, Customer
+from catalog.models import Cart, Product, Customer, Cart_Product
 from .serializers import CartSerializer, ProductSerializer, UserSerializer
 
 
@@ -53,18 +54,23 @@ def add_to_cart(request:HttpRequest):
     cart = Cart.objects.get_or_create(customer=customer)[0]
 
     try:
-        product_id = request.POST.get('product_id')
-        print(product_id)
+        body = json.loads(request.body)
+        product_id = body['product_id']
+        count = body['count']
         cart = Cart.objects.get_or_create(customer=customer)[0]
         product = Product.objects.get(id=product_id)
-        cart.products.add(product)
-        cart.save()
+        cart.products.add()
+        
     except Exception as e:
-        count_products = cart.products.count()
+        products = Cart_Product.objects.filter(cart=cart)
+        count_products = sum([product.count for product in products.all()])
         logger.error(str(e))
         return JsonResponse({
+            'success': False,
             'error': 'Произошла ошибка при добавлении товара в корзину',
-            'count_products': count_products}, 
+            'count_products': count_products},
             status=500)
-    count_products = cart.products.count()
+    
+    products = Cart_Product.objects.filter(cart=cart)
+    count_products = sum([product.count for product in products.all()])
     return JsonResponse({'success': True, 'count_products': count_products})

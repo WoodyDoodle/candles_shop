@@ -89,5 +89,26 @@ class Cart(models.Model):
     date_created = models.DateTimeField(auto_now_add=True, null=False)
     last_add = models.DateTimeField(null=True)
     is_paid = models.BooleanField(default=False)
-    products = models.ManyToManyField(Product)
+    products = models.ManyToManyField(Product, through='Cart_Product')
 
+class Cart_Product(models.Model):
+    cart = models.ForeignKey(Cart, on_delete=models.CASCADE, null=False)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, null=False)
+    count = models.IntegerField(default=1, null=False)
+
+    def add_or_update(self, count, *args, **kwargs):
+        object_ = Cart_Product.objects.filter(
+            cart = self.cart,
+            product=self.product
+            ).first()
+        if object_:
+            object_.count = count
+            object_.save()
+        else:
+            new_obj = Cart_Product.objects.create(
+                cart = self.cart,
+                product = self.product,
+                count = count
+            )
+            new_obj.save()
+            
