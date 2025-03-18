@@ -21,11 +21,10 @@ def catalog(request:HttpRequest):
     cart = Cart.objects.get_or_create(customer=customer)[0]
     
     cart_items = Cart_Product.objects.filter(cart=cart).all()
-    cart_items_ids = [cart_item.product.id for cart_item in cart_items]
+    #cart_items_ids = [cart_item.product.id for cart_item in cart_items]
     products = Product.objects.all()
     context = {
         'cart_items': cart_items,
-        'cart_items_ids': cart_items_ids,
         'products': products,
         'current_page': 'shop',
         }

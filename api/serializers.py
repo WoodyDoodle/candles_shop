@@ -1,7 +1,7 @@
 from django.contrib.auth.models import User, Group
 from rest_framework import serializers
 
-from catalog.models import Cart, Product
+from catalog.models import Cart, Product, Cart_Product
 
 
 class UserSerializer(serializers.HyperlinkedModelSerializer):
@@ -16,8 +16,8 @@ class CartSerializer(serializers.ModelSerializer):
 
 class ProductSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Product
-        fields = "__all__"
+        model = Cart_Product
+        fields = ["product", "count"]
     
 #class CartSerializer(serializers.Serializer):
     # customer = serializers.IntegerField(source='customer.name')

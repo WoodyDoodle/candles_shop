@@ -10,19 +10,7 @@
                 <h2>{{ item.name }}</h2>
                 <p>{{ item.type }}</p>
                 <p class="price">{{ item.price_sell }} р.</p>
-                {% if item.id in cart_item_ids %}
-                <div class="control-count-panel">
-                    <a href="" class="minus-button" data-product-id={{ item.id }}>-</a>
-                    {% for cart_item in cart_items %}
-                        {% if cart_item.product.id == item.id %}
-                            <span>{{ cart_item.count }}</span>
-                        {% endif %}
-                    {% endfor %}
-                    <a href="" class="plus-button" data-product-id={{ item.id }}>+</a>
-                </div>
-                {% else %}
                 <a href="" class="buy-button" data-product-id={{ item.id }}>Купить</a>
-                {% endif %}
             </div>
         </div>
         {% endfor %}
