@@ -1,5 +1,6 @@
 import logging
 import json
+import traceback
 
 from django.contrib.auth.models import User
 from django.http import JsonResponse, HttpRequest
@@ -52,10 +53,10 @@ def add_product_to_cart(request:HttpRequest, customer:Customer, cart:Cart):
         body = json.loads(request.body)
         product_id = body['product_id']
         cart = Cart.objects.get_or_create(customer=customer)[0]
-        product = Product.objects.get(id=product_id)
+        product = Product.objects.filter(id=product_id).first()
         cart.products.add(product)
-        
     except:
+        traceback.print_exc()
         products = Cart_Product.objects.filter(cart=cart)
         count_products = sum([product.count for product in products.all()])
         return JsonResponse({
@@ -79,7 +80,7 @@ def change_count_product_cart(request:HttpRequest, customer:Customer, cart:Cart)
     product = Product.objects.get(id=product_id)
     if not product:
         return JsonResponse({'success': False, 
-                             'error': f'Товар c id {product_id} найден'})
+                             'error': f'Товар c id {product_id} не найден'})
     
     cart_product = Cart_Product.objects.filter(cart=cart,product=product_id).first()
     if not cart_product:
@@ -95,5 +96,5 @@ def change_count_product_cart(request:HttpRequest, customer:Customer, cart:Cart)
         cart_product.count = count
         cart_product.save() 
 
-    return JsonResponse({'success': True, 
+    return JsonResponse({'success': True,
                          'count_product': count})
