@@ -76,7 +76,9 @@ def change_count_product_cart(request:HttpRequest, customer:Customer, cart:Cart)
     body = json.loads(request.body)
     product_id = body['product_id']
     count = body['count']
-
+    if count < 0:
+        return JsonResponse({'success': False,
+                             'error': f'Некорректное значение количества:{count}'})
     product = Product.objects.get(id=product_id)
     if not product:
         return JsonResponse({'success': False, 
@@ -89,9 +91,7 @@ def change_count_product_cart(request:HttpRequest, customer:Customer, cart:Cart)
     
     if count == 0:
         cart_product.delete()
-    elif count < 0:
-        return JsonResponse({'success': False,
-                             'error': f'Некорректное значение количества:{count}'})
+    
     else:
         cart_product.count = count
         cart_product.save() 
