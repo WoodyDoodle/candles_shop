@@ -1,3 +1,6 @@
+.counter {
+  text-align: center;
+}
 .count {
   border: 2px solid transparent;
   width: 4em;

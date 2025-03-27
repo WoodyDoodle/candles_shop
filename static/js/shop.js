@@ -17,12 +17,36 @@ fetch('../api/cart', {
 });
 
 
+document.addEventListener('input', function(event) {
+    if (event.target.classList.contains('count')) {
+        event.target.value = parseInt(event.target.value);
+        const counter = event.target.closest('.counter');
+        let count = parseInt(counter.querySelector('.count').value);
+        if (isNaN(count) || count < 0) {
+            counter.querySelector('.count').value = 0;
+            count = 0;
+        }
+
+        if (count === 0) {
+            convertCounterToButton(counter, counter.dataset.productId);
+            updateProductCount(counter.dataset.productId, count);
+            return;
+        }
+        setTimeout(() => {
+            newCount = parseInt(counter.querySelector('.count').value);
+            if (count === newCount) {
+                updateProductCount(counter.dataset.productId, count);
+            }
+        }, 2000);
+    }
+    
+});
+
 document.addEventListener('click', function(event) {
     if (event.target.classList.contains('minus')) {
         const counter = event.target.closest('.counter');
         const count = parseInt(counter.querySelector('.count').value) - 1;
         counter.querySelector('.count').value = count;
-        // ПОдождать 2 секунды перед отправкой запроса
         if (count === 0) {
             convertCounterToButton(counter, counter.dataset.productId);
             updateProductCount(counter.dataset.productId, count);
@@ -39,6 +63,11 @@ document.addEventListener('click', function(event) {
         const counter = event.target.closest('.counter');
         const count = parseInt(counter.querySelector('.count').value) + 1;
         counter.querySelector('.count').value = count;
+        if (count === 0) {
+            convertCounterToButton(counter, counter.dataset.productId);
+            updateProductCount(counter.dataset.productId, count);
+            return;
+        }
         setTimeout(() => {
             newCount = parseInt(counter.querySelector('.count').value);
             if (count === newCount) {
@@ -71,19 +100,26 @@ document.addEventListener('click', function(event) {
 
 
 function convertButtonToCounter(element, productId, productCount) {
-    element.outerHTML = `
+    // element.outerHTML = 
+    let newElementHtml = `
                 <div class="counter" data-product-id=${productId}>
                     <button class="minus">-</button>
                     <input class="count" inputmode="numeric" value="${productCount}"></input>
                     <button class="plus">+</button>
                 </div>
             `;
+    let newElement = document.createElement('div');
+    newElement.innerHTML = newElementHtml;
+    animateReplace(element, newElement)
 }
 
 function convertCounterToButton(element, productId) {
-    element.outerHTML = `
-                <a href="" class="buy-button" data-product-id=${productId}>Купить</a>
-            `;
+    let newElementHtml = `
+    <a href="" class="buy-button" data-product-id=${productId}>Купить</a>
+    `;
+    let newElement = document.createElement('div');
+    newElement.innerHTML = newElementHtml;
+    animateReplace(element, newElement)
 }
 
 
@@ -109,4 +145,28 @@ function updateProductCount(productId, count) {
         // document.querySelector('.count_product_cart').textContent = data.count_product;
         
     });
+}
+
+function animateReplace(oldElement, newElement) {
+    // Анимация исчезновения
+    const fadeOut = oldElement.animate(
+        [
+            { opacity: 1, transform: 'scale(1)' },
+            { opacity: 0, transform: 'scale(0.8)' }
+        ],
+        { duration: 150, easing: 'ease' }
+    );
+
+    // После завершения — замена
+    fadeOut.onfinish = () => {
+        oldElement.replaceWith(newElement);
+        // Анимация появления нового элемента
+        newElement.animate(
+            [
+                { opacity: 0, transform: 'scale(0.8)' },
+                { opacity: 1, transform: 'scale(1)' }
+            ],
+            { duration: 150, easing: 'ease' }
+        );
+    };
 }

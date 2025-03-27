@@ -28,6 +28,7 @@ urlpatterns = [
     path('shop/', catalog_views.catalog, name='shop'),
     path('about/', catalog_views.about, name='about'),
     path('contact/', catalog_views.contact, name='contact'),
+    path('cart/', catalog_views.cart, name='cart'),
     path('api/', include('api.urls')),
     
     ####### path('product/<int:product_id>/', catalog_views.product, name='product'),

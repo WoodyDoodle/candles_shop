@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block content %}
+{% load static %}
+<div class="product-list">
+    {% for item in cart_items %}
+    <div class="product-item">
+        {{ item.product.preview_image.preview }}
+        <div class="product-details">
+            <h2>{{ item.product.name }}</h2>
+            <p>{{ item.product.type }}</p>
+        </div>
+        <div class="product-price">
+            <p><b>{{ item.product.price_sell }}</b></p>
+            <p class='count-in-cart'>{{ item.count }}</p>
+            <p class='price-sum'>-</p>
+        </div>
+    </div>
+    {% endfor %}
+{% endblock content %}
