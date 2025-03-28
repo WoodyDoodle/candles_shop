@@ -1,19 +1,31 @@
 {% extends "base.html" %}
 {% block content %}
 {% load static %}
-<div class="product-list">
-    {% for item in cart_items %}
-    <div class="product-item">
-        {{ item.product.preview_image.preview }}
-        <div class="product-details">
-            <h2>{{ item.product.name }}</h2>
-            <p>{{ item.product.type }}</p>
+<div class="cart-header">
+    <div class="product-list">
+        {% for item in cart_items %}
+        <div class="product-item">
+            {{ item.product.preview_image.preview }}            
+            <div class="product-details">
+                <h2>{{ item.product.name }}</h2>
+                <p>{{ item.product.type }}</p>
+            </div>
+            <div class="product-price">
+                <p><b>{{ item.product.price_sell }}</b></p>
+                <div class="priduct-count">{{ item.count }}</div>
+                <p class='price-sum'>-</p>
+            </div>
         </div>
-        <div class="product-price">
-            <p><b>{{ item.product.price_sell }}</b></p>
-            <p class='count-in-cart'>{{ item.count }}</p>
-            <p class='price-sum'>-</p>
-        </div>
+        {% endfor %}
     </div>
-    {% endfor %}
+    <div class="cart-summary-container">
+        <div class="cart-summary">
+            <p>Итого:</p>
+            <p id="total-price"></p>
+        </div>
+        <button class="checkout-button">Оформить заказ</button>
+    </div>
+</div>
+<script src="{% static 'js/cart.js' %}"></script>
+<script src="{% static 'js/counter.js' %}"></script>
 {% endblock content %}
